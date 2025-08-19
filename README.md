@@ -8,6 +8,10 @@ Pippin Barr
 
 FrogFrogFrog will be some kind of game about catching flies as a frog. I'll have to update this description as I go along for it to be accurate.
 
+## Screenshot(s)
+
+Need to add this once I have one...
+
 ## Credits
 
 This project will use [p5.js](https://p5js.org). Maybe nothing else? Let's see.

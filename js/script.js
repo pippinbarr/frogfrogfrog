@@ -42,28 +42,62 @@ function setup() {
  * Draw the frog where the mouse is and draw a fly
 */
 function draw() {
+    drawBackground();
+    updateFrog();
+    updateFly();
+    displayFly();
+    displayFrog();
+}
+
+/**
+ * Draws the background. For now it's just blue, but it would be
+ * nice if it has, like, clouds and moving water or something.
+ */
+function drawBackground() {
     // Fill the background blue
     background(110, 150, 250);
+}
 
+/**
+ * Move the frog based on the mouse's x position
+ */
+function updateFrog() {
     // Update the frog's position to the mouse's x
     frog.x = mouseX;
+}
 
-    // Update the fly's position by adding its speed to its position
-    fly.x = fly.x + fly.speed;
-
-    // Will need to make the fly come back after it goes off the canvas though...
-
-    // Draw the fly somewhere just to see it for now
-    push();
-    fill(0, 0, 0);
-    noStroke();
-    ellipse(fly.x, fly.y, fly.size);
-    pop();
-
+/**
+ * Draw the frog on the canvas
+ */
+function displayFrog() {
     // Draw the frog at its position
+    // Just a green circle for now
     push();
     fill(110, 250, 140);
     noStroke();
     ellipse(frog.x, frog.y, frog.size);
+    pop();
+}
+
+/**
+ * Move the fly linearly across the canvas, left to right
+ */
+function updateFly() {
+    // Update the fly's position by adding its speed to its position
+    fly.x = fly.x + fly.speed;
+
+    // Will need to make the fly come back after it goes off the canvas though...
+}
+
+/**
+ * Draw the fly on the canvas
+ */
+function displayFly() {
+    // Draw the fly somewhere just to see it for now
+    // Just a black circle
+    push();
+    fill(0, 0, 0);
+    noStroke();
+    ellipse(fly.x, fly.y, fly.size);
     pop();
 }

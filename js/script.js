@@ -48,6 +48,11 @@ function draw() {
     // Update the frog's position to the mouse's x
     frog.x = mouseX;
 
+    // Update the fly's position by adding its speed to its position
+    fly.x = fly.x + fly.speed;
+
+    // Will need to make the fly come back after it goes off the canvas though...
+
     // Draw the fly somewhere just to see it for now
     push();
     fill(0, 0, 0);

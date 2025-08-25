@@ -16,9 +16,9 @@ const frog = {
 };
 
 const fly = {
-    // Position (this will need to change for the fly to move)
-    x: 0,
-    y: 200,
+    // Position (will be defined in setup)
+    x: undefined,
+    y: undefined,
     // Size is the diameter of the circle
     size: 15,
     // Speed the fly moves left to right
@@ -36,6 +36,9 @@ function setup() {
     // We will set its x based on the mouse every frame
     frog.x = width / 2;
     frog.y = height;
+
+    // Reset the fly to its starting point
+    resetFly();
 }
 
 /**
@@ -87,9 +90,21 @@ function updateFly() {
     fly.x = fly.x + fly.speed;
 
     // Make the fly return to the left when it reaches the right side
+    // and reset its y to be random (but higher than the frog obviously)
     if (fly.x >= width) {
-        fly.x = 0;
+        resetFly();
     }
+}
+
+/**
+ * Moves the fly back to its starting point at a random height
+ * A function so 
+ */
+function resetFly() {
+    // Back to the left
+    fly.x = 0;
+    // Random in the top half of the canvas
+    fly.y = random(0, height / 2);
 }
 
 /**

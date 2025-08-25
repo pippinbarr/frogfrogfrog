@@ -21,7 +21,7 @@ const frog = {
         // Size of the tip of the tongue (and the line joining it to the frog)
         size: 20,
         // How fast the tongue moves (out or in)
-        speed: 5,
+        speed: 15,
         // What is the tongue currently doing
         // idle; outbound; inbound
         state: "idle"
@@ -78,6 +78,9 @@ function drawBackground() {
 function updateFrog() {
     // Update the frog's position to the mouse's x
     frog.x = mouseX;
+
+    // Update the tongue's x position to the frog's
+    frog.tongue.x = frog.x;
 
     // Update the tongue's position based on its state and speed
     if (frog.tongue.state === "outbound") {
@@ -140,7 +143,7 @@ function resetFrog() {
     frog.y = height;
     // Position the tongue relative to the frog
     frog.tongue.x = frog.x;
-    frog.tongue.y = height / 2; // Just for now so I can actually see it!
+    frog.tongue.y = frog.y;
     // Reset the state back to in the mouth
     frog.tongue.state = "idle";
 }

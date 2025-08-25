@@ -78,6 +78,30 @@ function drawBackground() {
 function updateFrog() {
     // Update the frog's position to the mouse's x
     frog.x = mouseX;
+
+    // Update the tongue's position based on its state and speed
+    if (frog.tongue.state === "outbound") {
+        // Subtract the speed for outbound so it goes up
+        frog.tongue.y = frog.tongue.y - frog.tongue.speed;
+    }
+    else if (frog.tongue.state === "inbound") {
+        // Add the speed for inbound so it goes down
+        frog.tongue.y = frog.tongue.y + frog.tongue.speed;
+    }
+
+    // Check if the tongue reached the top of the screen
+    if (frog.tongue.y <= 0) {
+        // Send it back if it did
+        frog.tongue.state = "inbound";
+    }
+
+    // Check if the tongue reached the mouth
+    if (frog.tongue.state === "inbound" && frog.tongue.y >= frog.y) {
+        // If it did, then make it idle
+        frog.tongue.state = "idle";
+        // And position it exactly on the frog
+        frog.tongue.y = frog.y;
+    }
 }
 
 /**
@@ -157,4 +181,15 @@ function displayFly() {
     noStroke();
     ellipse(fly.x, fly.y, fly.size);
     pop();
+}
+
+/**
+ * On click, send the tongue out if it's not already
+ */
+function mousePressed() {
+    // Check if the tongue is idle (in the mouth)
+    if (frog.tongue.state === "idle") {
+        // If so, launch it by changing its state
+        frog.tongue.state = "outbound";
+    }
 }

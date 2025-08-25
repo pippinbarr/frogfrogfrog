@@ -19,7 +19,12 @@ const frog = {
         x: undefined,
         y: undefined,
         // Size of the tip of the tongue (and the line joining it to the frog)
-        size: 20
+        size: 20,
+        // How fast the tongue moves (out or in)
+        speed: 5,
+        // What is the tongue currently doing
+        // idle; outbound; inbound
+        state: "idle"
     }
 };
 
@@ -40,13 +45,8 @@ function setup() {
     // Create a 640x480 canvas
     createCanvas(640, 480);
 
-    // Position the frog in the bottom center
-    // We will set its x based on the mouse every frame
-    frog.x = width / 2;
-    frog.y = height;
-    // Position the tongue relative to the frog
-    frog.tongue.x = frog.x;
-    frog.tongue.y = height / 2; // Just for now so I can actually see it!
+    // Reset the frog to defaults
+    resetFrog();
 
     // Reset the fly to its starting point
     resetFly();
@@ -104,6 +104,21 @@ function displayFrog() {
     noStroke();
     ellipse(frog.x, frog.y, frog.size);
     pop();
+}
+
+/**
+ * Reset the frog to its default position and tongue state
+ */
+function resetFrog() {
+    // Position the frog in the bottom center
+    // We will set its x based on the mouse every frame
+    frog.x = width / 2;
+    frog.y = height;
+    // Position the tongue relative to the frog
+    frog.tongue.x = frog.x;
+    frog.tongue.y = height / 2; // Just for now so I can actually see it!
+    // Reset the state back to in the mouth
+    frog.tongue.state = "idle";
 }
 
 /**

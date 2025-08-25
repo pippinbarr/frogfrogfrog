@@ -86,7 +86,10 @@ function updateFly() {
     // Update the fly's position by adding its speed to its position
     fly.x = fly.x + fly.speed;
 
-    // Will need to make the fly come back after it goes off the canvas though...
+    // Make the fly return to the left when it reaches the right side
+    if (fly.x >= width) {
+        fly.x = 0;
+    }
 }
 
 /**

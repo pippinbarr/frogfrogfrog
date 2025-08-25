@@ -12,7 +12,15 @@ const frog = {
     x: undefined,
     y: undefined,
     // Size is the diameter of the circle
-    size: 140
+    size: 140,
+    // The frog's tongue has it's own position and size...
+    tongue: {
+        // Position of the tip of the tongue
+        x: undefined,
+        y: undefined,
+        // Size of the tip of the tongue (and the line joining it to the frog)
+        size: 20
+    }
 };
 
 const fly = {
@@ -36,6 +44,9 @@ function setup() {
     // We will set its x based on the mouse every frame
     frog.x = width / 2;
     frog.y = height;
+    // Position the tongue relative to the frog
+    frog.tongue.x = frog.x;
+    frog.tongue.y = height / 2; // Just for now so I can actually see it!
 
     // Reset the fly to its starting point
     resetFly();
@@ -73,6 +84,19 @@ function updateFrog() {
  * Draw the frog on the canvas
  */
 function displayFrog() {
+    // Draw the tongue first, since it should
+    // go behind the frog....
+    push();
+    // Tongue tip first
+    fill(250, 140, 120);
+    noStroke();
+    ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
+    // Tongue line second
+    stroke(250, 140, 120);
+    strokeWeight(frog.tongue.size);
+    line(frog.x, frog.y, frog.tongue.x, frog.tongue.y);
+    pop();
+
     // Draw the frog at its position
     // Just a green circle for now
     push();

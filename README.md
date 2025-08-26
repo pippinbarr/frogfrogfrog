@@ -17,13 +17,9 @@ FrogFrogFrog is a game/simulation about catching flies as a frog. You play as a 
 
 ![Image of the frog trying to catch a fly](./process/2025-08-26-frogfrogfrog-screenshot.png)
 
-## Credits
-
-This project uses [p5.js](https://p5js.org).
-
 ## Attribution
 
-For now this project does not use code or assets from any other sources.
+This project uses [p5.js](https://p5js.org).
 
 ## License
 

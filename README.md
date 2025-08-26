@@ -1,4 +1,4 @@
-# FrogFrogFrog
+# Frogfrogfrog
 
 Pippin Barr
 
@@ -6,19 +6,24 @@ Pippin Barr
 
 ## Description
 
-FrogFrogFrog will be some kind of game about catching flies as a frog. I'll have to update this description as I go along for it to be accurate.
+FrogFrogFrog is a game/simulation about catching flies as a frog. You play as a frog at the bottom of the screen and can move left and right using the mouse. A fly flies past along the top of the screen and you can shoot your tongue out to try to catch it.
+
+### Controls
+
+- Mouse to move left and right
+- Click to shoot tongue
 
 ## Screenshot(s)
 
-Need to add this once I have one...
+![Image of the frog trying to catch a fly](./process/2025-08-26-frogfrogfrog-screenshot.png)
 
 ## Credits
 
-This project will use [p5.js](https://p5js.org). Maybe nothing else? Let's see.
+This project uses [p5.js](https://p5js.org).
 
 ## Attribution
 
-If I use any assets or other people's code or something I'll have to include it in here
+For now this project does not use code or assets from any other sources.
 
 ## License
 

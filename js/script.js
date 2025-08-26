@@ -59,6 +59,7 @@ function draw() {
     drawBackground();
     updateFrog();
     updateFly();
+    checkCatch();
     displayFly();
     displayFrog();
 }
@@ -104,6 +105,22 @@ function updateFrog() {
                 frog.tongue.y = frog.y;
             }
             break;
+    }
+}
+
+/**
+ * Checks if the tongue touches the fly and handles that
+ */
+function checkCatch() {
+    // Check if the tongue tip overlaps the fly
+    // Get the distance between the tongue tip and frog
+    const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+    // Check if there's an overlap
+    if (d <= frog.tongue.size / 2 + fly.size / 2) {
+        // Reset the fly (as if a new one comes in)
+        resetFly();
+        // Send the tongue back to the frog
+        frog.tongue.state = "inbound";
     }
 }
 

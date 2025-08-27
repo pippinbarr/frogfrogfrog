@@ -148,6 +148,35 @@ function displayFrog() {
     noStroke();
     ellipse(frog.x, frog.y, frog.size);
     pop();
+
+    // Calculate the angle to rotate each eye based on where the fly is
+    // Uses trigonometry! I knew that would come in handy one day!
+    const eyeAngle = atan((frog.x - fly.x) / (frog.y - fly.y))
+
+    // Left eye
+    push();
+    translate(frog.x - frog.size / 3, frog.y - frog.size / 3);
+    rotate(-eyeAngle);
+    noStroke();
+    fill(255); // White of the eyes
+    ellipse(0, 0, frog.size / 4);
+    fill(0); // Pupil
+    ellipse(0, -frog.size / 15, frog.size / 8);
+    pop();
+    // I should really do a better job on the numbers here
+
+    // Right eye
+    push();
+    translate(frog.x + frog.size / 3, frog.y - frog.size / 3);
+    rotate(-eyeAngle);
+    noStroke();
+    fill(255); // White of the eyes
+    ellipse(0, 0, frog.size / 4);
+    fill(0); // Pupil
+    ellipse(0, -frog.size / 15, frog.size / 8);
+    pop();
+    // I should really do a better job on the numbers here
+    // These eyes should be a function eh
 }
 
 /**

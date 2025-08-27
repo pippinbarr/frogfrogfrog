@@ -126,6 +126,7 @@ function checkCatch() {
 
 /**
  * Draw the frog on the canvas
+ * A frog is a green circle with a tongue and eyes
  */
 function displayFrog() {
     // Draw the tongue first, since it should
@@ -149,13 +150,24 @@ function displayFrog() {
     ellipse(frog.x, frog.y, frog.size);
     pop();
 
-    // Calculate the angle to rotate each eye based on where the fly is
+    // Eyes
+    drawFrogEye(frog.x - frog.size / 3, frog.y - frog.size / 3);
+    drawFrogEye(frog.x + frog.size / 3, frog.y - frog.size / 3);
+}
+
+/**
+ * Draws a frog's eye at the specified position. The eye will follow the fly.
+ * 
+ * @param {float} x x-position of the eye
+ * @param {float} y y-position of the eye
+ */
+function drawFrogEye(x, y) {
+    // Calculate the angle to rotate the eye based on where the fly is
     // Uses trigonometry! I knew that would come in handy one day!
-    const eyeAngle = atan((frog.x - fly.x) / (frog.y - fly.y))
+    const eyeAngle = atan((x - fly.x) / (y - fly.y))
 
-    // Left eye
     push();
-    translate(frog.x - frog.size / 3, frog.y - frog.size / 3);
+    translate(x, y);
     rotate(-eyeAngle);
     noStroke();
     fill(255); // White of the eyes
@@ -163,20 +175,7 @@ function displayFrog() {
     fill(0); // Pupil
     ellipse(0, -frog.size / 15, frog.size / 8);
     pop();
-    // I should really do a better job on the numbers here
-
-    // Right eye
-    push();
-    translate(frog.x + frog.size / 3, frog.y - frog.size / 3);
-    rotate(-eyeAngle);
-    noStroke();
-    fill(255); // White of the eyes
-    ellipse(0, 0, frog.size / 4);
-    fill(0); // Pupil
-    ellipse(0, -frog.size / 15, frog.size / 8);
-    pop();
-    // I should really do a better job on the numbers here
-    // These eyes should be a function eh
+    // I should really do a better job on the numbers here though, ugly stuff
 }
 
 /**

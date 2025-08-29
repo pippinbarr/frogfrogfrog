@@ -35,7 +35,11 @@ const fly = {
     // Size is the diameter of the circle
     size: 15,
     // Speed the fly moves left to right
-    speed: 5
+    speed: 5,
+    // Flapping wings
+    wingMaxSize: 15, // How long is a wing at most
+    wingAngle: 0, // Use in sine function to vary the wing size over time
+    wingSpeed: 1.2
 };
 
 /**
@@ -205,6 +209,9 @@ function updateFly() {
     if (fly.x >= width) {
         resetFly();
     }
+
+    // Increase the angle used to control the fly's wings
+    fly.wingAngle += fly.wingSpeed;
 }
 
 /**
@@ -222,8 +229,19 @@ function resetFly() {
  * Draw the fly on the canvas
  */
 function displayFly() {
-    // Draw the fly somewhere just to see it for now
-    // Just a black circle
+    // Calculate the size of the wings based on the wing angle using sine
+    // map it to a number between 0 and max size
+    const wingSize = map(sin(fly.wingAngle), -1, 1, 0, fly.wingMaxSize);
+
+    // Wings
+    push();
+    stroke(0);
+    fill(255);
+    ellipse(fly.x, fly.y - fly.size / 2, fly.size / 1.5, wingSize);
+    ellipse(fly.x, fly.y + fly.size / 2, fly.size / 1.5, wingSize);
+    pop();
+
+    // Body is a black circle
     push();
     fill(0, 0, 0);
     noStroke();

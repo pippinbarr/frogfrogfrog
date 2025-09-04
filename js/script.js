@@ -66,6 +66,7 @@ function draw() {
     checkCatch();
     displayFly();
     displayFrog();
+    displayLightMask();
 }
 
 /**
@@ -247,6 +248,29 @@ function displayFly() {
     noStroke();
     ellipse(fly.x, fly.y, fly.size);
     pop();
+}
+
+/**
+ * Covers the canvas in black and masks out a "light" 
+ * on the frog's tongue. Kind of stupid.
+ */
+function displayLightMask() {
+    push();
+    // This is how you clip with a mask apparently
+    // It calls a function to define the shape of the mask
+    // And in this case I'm inverting it so that I want
+    // the *inverse* of the circle to be black
+    clip(lightMask, { invert: true });
+    fill(0, 200);
+    rect(0, 0, width, height);
+    pop()
+}
+
+/**
+ * Defines the mask (an ellipse centered on the frog's tongue)
+ */
+function lightMask() {
+    ellipse(frog.tongue.x, frog.tongue.y, 250, 250);
 }
 
 /**

@@ -66,7 +66,9 @@ function draw() {
     checkCatch();
     displayFly();
     displayFrog();
-    displayLightMask();
+    // Leaving this out for now, I don't like the effect enough
+    // until it proves itself further.
+    // displayLightMask();
 }
 
 /**

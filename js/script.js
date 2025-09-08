@@ -42,6 +42,10 @@ const fly = {
     wingSpeed: 1.2
 };
 
+// This variable will hold the appropriate action verb based on whether
+// the user is using touch or not (in though)
+let actionVerb = "click"; // Can be "click" or "touch"
+
 // Current state (so we can have a title at least for now)
 let state = "title"; // Can be: "title" or "simulation"
 
@@ -49,14 +53,24 @@ let state = "title"; // Can be: "title" or "simulation"
  * Create a canvas to draw on
 */
 function setup() {
-    // Create a 640x480 canvas
-    createCanvas(640, 480);
+    // Create a 480x640 canvas (trying for portrait for mobile)
+    createCanvas(480, 640);
 
     // Reset the frog to defaults
     resetFrog();
 
     // Reset the fly to its starting point
     resetFly();
+
+    // Determine the action verb
+    // Found this idea here: https://gist.github.com/esedic/39a16a7521d42ae205203e3d40dc19f5
+    // But it's pretty common
+    // Basically you're checking if the window (the browser) "knows about"
+    // checking for touches, if it does, then it's at least pretty likely
+    // that touch is available
+    if ('ontouchstart' in window) {
+        actionVerb = "touch";
+    }
 }
 
 /**
@@ -93,7 +107,7 @@ function title() {
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
     fill(40, 80, 30);
-    text("- click to begin -", width / 2, 3 * height / 4);
+    text(`- ${actionVerb} to begin -`, width / 2, 3 * height / 4);
     pop();
 }
 

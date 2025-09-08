@@ -8,6 +8,8 @@
 "use strict";
 
 const frog = {
+    // Is the frog being moved right now?
+    dragging: false,
     // Will set position in setup based on canvas size
     x: undefined,
     y: undefined,
@@ -74,7 +76,7 @@ function setup() {
 }
 
 /**
- * Draw the frog where the mouse is and draw a fly
+ * Draw the title or simulation state
 */
 function draw() {
     if (state === "title") {
@@ -137,11 +139,14 @@ function drawBackground() {
 }
 
 /**
- * Move the frog based on the mouse's x position
+ * Move the frog based on the mouse's/finger's x position
  */
 function updateFrog() {
-    // Update the frog's position to the mouse's x
-    frog.x = mouseX;
+    // If the frog is currently responding to movement (touch or mouse)
+    if (frog.dragging) {
+        // Update the frog's position to the mouse's/finger's x
+        frog.x = mouseX;
+    }
 
     // Update the tongue's x position to the frog's
     frog.tongue.x = frog.x;
@@ -246,7 +251,6 @@ function drawFrogEye(x, y) {
  */
 function resetFrog() {
     // Position the frog in the bottom center
-    // We will set its x based on the mouse every frame
     frog.x = width / 2;
     frog.y = height;
     // Position the tongue relative to the frog
@@ -339,10 +343,23 @@ function mousePressed() {
         state = "simulation";
     }
     else if (state === "simulation") {
-        // Check if the tongue is idle (in the mouth)
-        if (frog.tongue.state === "idle") {
-            // If so, launch it by changing its state
-            frog.tongue.state = "outbound";
+        // Check if the frog is not already being dragged
+        if (!frog.dragging) {
+            // If so, we start dragging it
+            frog.dragging = true;
+            // And we launch the tongue if it's not already on the move
+            // Check if the tongue is idle (in the mouth)
+            if (frog.tongue.state === "idle") {
+                // If so, launch it by changing its state
+                frog.tongue.state = "outbound";
+            }
         }
     }
+}
+
+/**
+ * If the mouse or finger is released, we stop dragging the frog...
+ */
+function mouseReleased() {
+    frog.dragging = false;
 }

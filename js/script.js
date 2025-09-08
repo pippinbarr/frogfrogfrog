@@ -42,6 +42,9 @@ const fly = {
     wingSpeed: 1.2
 };
 
+// Current state (so we can have a title at least for now)
+let state = "title"; // Can be: "title" or "simulation"
+
 /**
  * Create a canvas to draw on
 */
@@ -60,6 +63,45 @@ function setup() {
  * Draw the frog where the mouse is and draw a fly
 */
 function draw() {
+    if (state === "title") {
+        title();
+    }
+    else if (state === "simulation") {
+        simulation();
+    }
+}
+
+/**
+ * Displays the title
+ */
+function title() {
+    // A green
+    background(100, 240, 80);
+
+    // The title
+    push();
+    textSize(64);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    text("frogfrogfrog", width / 2, height / 2);
+    pop();
+
+    // The instruction to click to begin
+    push();
+    textSize(32);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    text("- click to begin -", width / 2, 3 * height / 4);
+    pop();
+}
+
+/**
+ * Runs the simulation (I'm refusing to call it a game, because it's
+ * just so realistic)
+ */
+function simulation() {
     drawBackground();
     updateFrog();
     updateFly();
@@ -279,9 +321,14 @@ function lightMask() {
  * On click, send the tongue out if it's not already
  */
 function mousePressed() {
-    // Check if the tongue is idle (in the mouth)
-    if (frog.tongue.state === "idle") {
-        // If so, launch it by changing its state
-        frog.tongue.state = "outbound";
+    if (state === "title") {
+        state = "simulation";
+    }
+    else if (state === "simulation") {
+        // Check if the tongue is idle (in the mouth)
+        if (frog.tongue.state === "idle") {
+            // If so, launch it by changing its state
+            frog.tongue.state = "outbound";
+        }
     }
 }

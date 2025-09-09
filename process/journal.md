@@ -22,3 +22,13 @@ Oh! Oh! Oh! Here's another couple of ideas
 - Sound... yeah it could use some sound, sound is good
 - Make it personal... Some kind of "personal" level to the flies (or the frog) I guess? I played [Time Flies](https://timeflies.buzz/) recently and it's genius at making the fly feel really real and important/poignant? Lots to learn from that game in general
 - Multiple frogs... either as in multiplayer or just competing AI frogs would be pretty funny?
+
+## Input and branching (2025-09-09)
+
+Something I'm recognizing in the process right now, that requires thought and decision-making, is the question of input. When I made my first (pretty clumsy) switch to a mobile-friendly form of input it really opened a can of worms about how to control the thing. And that opens a can of worms in terms of how central and expressive the input approach ultimately will be, right?
+
+Sitting in Myriade right now I wondered about a flick-oriented control where you can move the frog around by dragging it on the bottom, but then you can flick your finger up to shoot the tongue in that direction... much more frog-like at least in my mind... but probably a lot harder? Well you'd have to try.
+
+And there are other ways too... like a non-moving frog for instance but you tap a target location and the tongue heads that way? That would be maybe a smaller step for the moment, though completely changes the tongue's movement... would need a speed and an *angle* instead of just it moving vertically every time.
+
+But maybe that's what I try and then pending how that feels the flick could be a next step (though that sort of thing always seems fiddly)? Although maybe the flick takes it to a place that's not quite as friendly for desktop computers/mouse-input? And does it end up just not feeling quite so dynamic if the frog doesn't move around? HMMMM. Well maybe it's just a try it and see... maybe there's a way to preserve the different input style? Probably not though. A smart person would make a branch and try that, but that will make the branch invisible? Or... actually what if I made *this* a branch and didn't continue that branch (never merged it) as a way of sign-pointing a major build moment? Have we already discussed this within MDM?? It suddenly seems like quite a great idea? A branch not to explore something new but to preserve something old...! Huh.

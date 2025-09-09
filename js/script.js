@@ -23,10 +23,20 @@ const frog = {
         // Size of the tip of the tongue (and the line joining it to the frog)
         size: 20,
         // How fast the tongue moves (out or in)
-        speed: 15,
+        speed: 0.025,
         // What is the tongue currently doing
         // idle; outbound; inbound
-        state: "idle"
+        state: "idle",
+        // Starting point we will be lerping from...
+        start: {
+            x: undefined,
+            y: undefined
+        },
+        // Target
+        target: {
+            x: undefined,
+            y: undefined
+        }
     }
 };
 
@@ -142,38 +152,82 @@ function drawBackground() {
  * Move the frog based on the mouse's/finger's x position
  */
 function updateFrog() {
-    // If the frog is currently responding to movement (touch or mouse)
-    if (frog.dragging) {
-        // Update the frog's position to the mouse's/finger's x
-        frog.x = mouseX;
-    }
+    frog.x = mouseX;
 
     // Update the tongue's x position to the frog's
-    frog.tongue.x = frog.x;
+    // frog.tongue.x = frog.x;
 
     switch (frog.tongue.state) {
+        // If the tongue is idle it just follows the frog
         case "idle":
+            frog.tongue.x = frog.x;
+            frog.tongue.y = frog.y;
             break;
+
+        // If the tongue is outbound it needs to move toward its target
+        // and come back it it reaches it
         case "outbound":
-            // Subtract the speed so it goes up
-            frog.tongue.y = frog.tongue.y - frog.tongue.speed;
-            // Check if it hit the top and "bounce" if so
-            if (frog.tongue.y <= 0) {
-                frog.tongue.state = "inbound";
+            // Movement
+            moveTongue();
+
+            // Check if it hit the destination and head back
+            if (frog.tongue.progress >= 1) {
+                retractTongue();
             }
             break;
+
+        // If the tongue in in bound it needs to move toward the
+        // frog's body as a target
         case "inbound":
-            // Add the speed so it goes down
-            frog.tongue.y = frog.tongue.y + frog.tongue.speed;
+            // Update the target to the current frog position
+            // So that it lerps to the correct location given that the
+            // frog can move around
+            frog.tongue.target.x = frog.x;
+            frog.tongue.target.y = frog.y;
+            // Move the tongue
+            moveTongue();
+
             // Check if it returned to the frog and stop if so
-            if (frog.tongue.state === "inbound" && frog.tongue.y >= frog.y) {
-                // Make tongue idle
-                frog.tongue.state = "idle";
-                // And position it exactly on the frog
-                frog.tongue.y = frog.y;
+            if (frog.tongue.progress >= 1) {
+                resetTongue();
             }
             break;
     }
+}
+
+/**
+ * Move the tongue position by interpolating between it's starting and target
+ * positions.
+ */
+function moveTongue() {
+    frog.tongue.progress += frog.tongue.speed;
+    frog.tongue.x = lerp(frog.tongue.start.x, frog.tongue.target.x, frog.tongue.progress);
+    frog.tongue.y = lerp(frog.tongue.start.y, frog.tongue.target.y, frog.tongue.progress);
+}
+
+/**
+ * Set things up to retract the tongue back into the mouth
+ */
+function retractTongue() {
+    frog.tongue.state = "inbound";
+    frog.tongue.start.x = frog.tongue.target.x;
+    frog.tongue.start.y = frog.tongue.target.y;
+    frog.tongue.target.x = frog.x;
+    frog.tongue.target.y = frog.y;
+    frog.tongue.progress = 0;
+}
+
+/**
+ * Set the tongue back to sweet nothing (in the frog's mouth)
+ */
+function resetTongue() {
+    // Make tongue idle
+    frog.tongue.state = "idle";
+    // Reset progress
+    frog.tongue.progress = 0;
+    // And position it exactly on the frog
+    frog.tongue.x = frog.x;
+    frog.tongue.y = frog.y;
 }
 
 /**
@@ -188,7 +242,7 @@ function checkCatch() {
         // Reset the fly (as if a new one comes in)
         resetFly();
         // Send the tongue back to the frog
-        frog.tongue.state = "inbound";
+        retractTongue();
     }
 }
 
@@ -337,29 +391,33 @@ function lightMask() {
 
 /**
  * On click, send the tongue out if it's not already
+ * Towards the location of the click/touch
  */
 function mousePressed() {
+    // Handle the different states
     if (state === "title") {
         state = "simulation";
     }
     else if (state === "simulation") {
-        // Check if the frog is not already being dragged
-        if (!frog.dragging) {
-            // If so, we start dragging it
-            frog.dragging = true;
-            // And we launch the tongue if it's not already on the move
-            // Check if the tongue is idle (in the mouth)
-            if (frog.tongue.state === "idle") {
-                // If so, launch it by changing its state
-                frog.tongue.state = "outbound";
-            }
+        // Check if the tongue is idle (otherwise it can't shoot out)
+        if (frog.tongue.state === "idle") {
+            // Set the tongue's starting position (in the frog)
+            frog.tongue.start.x = frog.x;
+            frog.tongue.start.y = frog.y;
+            // Set the tongue's target position (we will lerp to it I guess?)
+            frog.tongue.target.x = mouseX;
+            frog.tongue.target.y = mouseY;
+            // Set the tongue's progress (nothin)
+            frog.tongue.progress = 0;
+            // Launch
+            frog.tongue.state = "outbound";
         }
     }
 }
 
 /**
- * If the mouse or finger is released, we stop dragging the frog...
+ * Nothing for now
  */
 function mouseReleased() {
-    frog.dragging = false;
+    // frog.dragging = false;
 }

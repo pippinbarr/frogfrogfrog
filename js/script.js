@@ -23,7 +23,7 @@ const frog = {
         // Size of the tip of the tongue (and the line joining it to the frog)
         size: 20,
         // How fast the tongue moves (out or in)
-        speed: 0.025,
+        speed: 0.05,
         // What is the tongue currently doing
         // idle; outbound; inbound
         state: "idle",
@@ -46,8 +46,15 @@ const fly = {
     y: undefined,
     // Size is the diameter of the circle
     size: 15,
-    // Speed the fly moves left to right
-    speed: 5,
+    // Times for the perlin noise to allow us to get some organic
+    // movement for the fly on the screen
+    // Will be set by resetFly() in setup()
+    tx: undefined,
+    ty: undefined,
+    // How erratically the fly moves (this will be used to change the time variables
+    // for the Perlin noise). The bigger the number there more random-looking
+    // the movement
+    buzziness: 0.02,
     // Flapping wings
     wingMaxSize: 15, // How long is a wing at most
     wingAngle: 0, // Use in sine function to vary the wing size over time
@@ -152,10 +159,6 @@ function drawBackground() {
  * Move the frog based on the mouse's/finger's x position
  */
 function updateFrog() {
-    frog.x = mouseX;
-
-    // Update the tongue's x position to the frog's
-    // frog.tongue.x = frog.x;
 
     switch (frog.tongue.state) {
         // If the tongue is idle it just follows the frog
@@ -209,6 +212,11 @@ function moveTongue() {
  * Set things up to retract the tongue back into the mouth
  */
 function retractTongue() {
+    // Don't retract the tongue if it's already coming back!
+    if (frog.tongue.state === "inbound") {
+        return;
+    }
+
     frog.tongue.state = "inbound";
     frog.tongue.start.x = frog.tongue.target.x;
     frog.tongue.start.y = frog.tongue.target.y;
@@ -318,14 +326,16 @@ function resetFrog() {
  * Move the fly linearly across the canvas, left to right
  */
 function updateFly() {
+    // Update the fly's time variable (to cause noise() to return the
+    // next organically related value
+    fly.tx += fly.buzziness;
+    fly.ty += fly.buzziness;
     // Update the fly's position by adding its speed to its position
-    fly.x = fly.x + fly.speed;
+    fly.x = map(noise(fly.tx), 0, 1, 0, width);
+    fly.y = map(noise(fly.ty), 0, 1, 0, height);
 
-    // Make the fly return to the left when it reaches the right side
-    // and reset its y to be random (but higher than the frog obviously)
-    if (fly.x >= width) {
-        resetFly();
-    }
+    // Note the fly never leaves the screen because the map() function is 
+    // forcing its x and y to be on the canvas
 
     // Increase the angle used to control the fly's wings
     fly.wingAngle += fly.wingSpeed;
@@ -336,10 +346,9 @@ function updateFly() {
  * A function so 
  */
 function resetFly() {
-    // Back to the left
-    fly.x = 0;
-    // Random in the top half of the canvas
-    fly.y = random(0, height / 2);
+    // Set random time values to move the fly somewhere
+    fly.tx = random(0, 100);
+    fly.ty = random(0, 100);
 }
 
 /**

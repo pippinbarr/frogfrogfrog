@@ -19,7 +19,14 @@ FrogFrogFrog is a game/simulation about catching flies as a frog. You play as a 
 
 ## Attribution
 
-This project uses [p5.js](https://p5js.org).
+JavaScript libraries:
+- [p5.js](https://p5js.org) and p5.sound.js
+
+Sound assets are are all from freesound.org:
+- [heavy_swallow.wav](https://freesound.org/people/Mikes-MultiMedia/sounds/368711/) by Mikes-MultiMedia
+- [Slurping Sound (Variations: 1.Only with mouth 2.With liquid)](https://freesound.org/people/Idalize/sounds/408208/) by Idalize
+- [FlyLoop.flac](https://freesound.org/people/acclivity/sounds/20797/) by acclivity
+- [The sounds of the pond 04.wav](https://freesound.org/people/dibko/sounds/638417/) by dibko
 
 ## License
 

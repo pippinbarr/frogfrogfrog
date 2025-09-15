@@ -58,7 +58,17 @@ const fly = {
     // Flapping wings
     wingMaxSize: 15, // How long is a wing at most
     wingAngle: 0, // Use in sine function to vary the wing size over time
-    wingSpeed: 1.2
+    wingSpeed: 1.2,
+    // Was it caught this time?
+    caught: false
+};
+
+// A place to store our sound effects
+const sounds = {
+    buzzing: undefined,
+    atmosphere: undefined,
+    slurp: undefined,
+    swallow: undefined,
 };
 
 // This variable will hold the appropriate action verb based on whether
@@ -67,6 +77,18 @@ let actionVerb = "click"; // Can be "click" or "touch"
 
 // Current state (so we can have a title at least for now)
 let state = "title"; // Can be: "title" or "simulation"
+
+/**
+ * Load our sounds
+ */
+function preload() {
+    // MP3s for the longer two
+    sounds.atmosphere = loadSound("assets/sounds/pond.mp3");
+    sounds.buzzing = loadSound("assets/sounds/fly.mp3");
+    // WAVs for the shorter two
+    sounds.slurp = loadSound("assets/sounds/slurp.wav");
+    sounds.swallow = loadSound("assets/sounds/swallow.wav");
+}
 
 /**
  * Create a canvas to draw on
@@ -90,6 +112,10 @@ function setup() {
     if ('ontouchstart' in window) {
         actionVerb = "touch";
     }
+
+    // Play atmosphere (won't start until there's user input though)
+    sounds.atmosphere.loop();
+    sounds.buzzing.loop();
 }
 
 /**
@@ -193,6 +219,11 @@ function updateFrog() {
             // Check if it returned to the frog and stop if so
             if (frog.tongue.progress >= 1) {
                 resetTongue();
+                // If there was a fly caught, then swallow
+                if (fly.caught) {
+                    fly.caught = false;
+                    sounds.swallow.play();
+                }
             }
             break;
     }
@@ -247,6 +278,8 @@ function checkCatch() {
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if there's an overlap
     if (d <= frog.tongue.size / 2 + fly.size / 2) {
+        // Set the fly as caught
+        fly.caught = true;
         // Reset the fly (as if a new one comes in)
         resetFly();
         // Send the tongue back to the frog
@@ -403,6 +436,9 @@ function lightMask() {
  * Towards the location of the click/touch
  */
 function mousePressed() {
+    // Handle audio
+    userStartAudio();
+
     // Handle the different states
     if (state === "title") {
         state = "simulation";
@@ -410,6 +446,8 @@ function mousePressed() {
     else if (state === "simulation") {
         // Check if the tongue is idle (otherwise it can't shoot out)
         if (frog.tongue.state === "idle") {
+            // Sound
+            sounds.slurp.play();
             // Set the tongue's starting position (in the frog)
             frog.tongue.start.x = frog.x;
             frog.tongue.start.y = frog.y;

@@ -6,16 +6,15 @@ Pippin Barr
 
 ## Description
 
-FrogFrogFrog is a game/simulation about catching flies as a frog. You play as a frog at the bottom of the screen and can move left and right using the mouse. A fly flies past along the top of the screen and you can shoot your tongue out to try to catch it.
+FrogFrogFrog is a game/simulation about catching flies as a frog. You play as a frog at the bottom of the screen. A fly flies past along the top of the screen and you can shoot your tongue out to try to catch it by tapping/clicking a location. Best of luck.
 
 ### Controls
 
-- Mouse to move left and right
-- Click to shoot tongue
+- Click/touch a target destination to shoot tongue
 
 ## Screenshot(s)
 
-![Image of the frog trying to catch a fly](./process/2025-08-26-frogfrogfrog-screenshot.png)
+![Image of the frog trying to catch a fly](./process/2025-09-18-frogfrogfrog-screenshot.png)
 
 ## Attribution
 

@@ -2,7 +2,14 @@
  * FrogFrogFrog
  * Pippin Barr
  * 
- * In progress game about catching flies as a frog.
+ * Game about catching flies as a frog.
+ * 
+ * The frog is at the bottom centre and you shoot its tongue to a 
+ * specific destination with a click/touch. If it hits the fly
+ * the fly gets eaten and on you go forever.
+ * 
+ * There are no consequences for anything yet which is kind of chill
+ * but probably should change.
  */
 
 "use strict";
@@ -248,11 +255,17 @@ function retractTongue() {
         return;
     }
 
+    // This is what it takes to send the tongue back these days!
+    // Change the state
     frog.tongue.state = "inbound";
+    // Set its starting point to where it just reached
+    // Actually I wonder if this is the cleanest approach, seems weird
     frog.tongue.start.x = frog.tongue.target.x;
     frog.tongue.start.y = frog.tongue.target.y;
+    // We're going back to target wherever the frog is
     frog.tongue.target.x = frog.x;
     frog.tongue.target.y = frog.y;
+    // And we haven't made any progress yet because we just started
     frog.tongue.progress = 0;
 }
 
@@ -330,13 +343,16 @@ function drawFrogEye(x, y) {
     const eyeAngle = atan((x - fly.x) / (y - fly.y))
 
     push();
+    // Translate the "pen" to the location of the eye
     translate(x, y);
+    // Rotate by the correct angle
     rotate(-eyeAngle);
+    // And then draw the eye there
     noStroke();
     fill(255); // White of the eyes
     ellipse(0, 0, frog.size / 4);
-    fill(0); // Pupil
-    ellipse(0, -frog.size / 15, frog.size / 8);
+    fill(0); // Pupil is offset from the centre by a bit
+    ellipse(0, -frog.size / 15, frog.size / 8); // Yeah those hardcoded numbers are bad
     pop();
     // I should really do a better job on the numbers here though, ugly stuff
 }
@@ -404,31 +420,9 @@ function displayFly() {
     push();
     fill(0, 0, 0);
     noStroke();
-    ellipse(fly.x, fly.y, fly.size);
+    // Width is slightly elongated to make it more... fly-ish
+    ellipse(fly.x, fly.y, fly.size * 1.5, fly.size);
     pop();
-}
-
-/**
- * Covers the canvas in black and masks out a "light" 
- * on the frog's tongue. Kind of stupid.
- */
-function displayLightMask() {
-    push();
-    // This is how you clip with a mask apparently
-    // It calls a function to define the shape of the mask
-    // And in this case I'm inverting it so that I want
-    // the *inverse* of the circle to be black
-    clip(lightMask, { invert: true });
-    fill(0, 200);
-    rect(0, 0, width, height);
-    pop()
-}
-
-/**
- * Defines the mask (an ellipse centered on the frog's tongue)
- */
-function lightMask() {
-    ellipse(frog.tongue.x, frog.tongue.y, 250, 250);
 }
 
 /**
@@ -467,4 +461,35 @@ function mousePressed() {
  */
 function mouseReleased() {
     // frog.dragging = false;
+}
+
+
+/**
+ * Below are things that are not part of the program right now.
+ * I technically should delete them but I'm keeping them around
+ * superstitiously in case I want to refer to them later.
+ */
+
+
+/**
+ * Covers the canvas in black and masks out a "light" 
+ * on the frog's tongue. Kind of stupid.
+ */
+function displayLightMask() {
+    push();
+    // This is how you clip with a mask apparently
+    // It calls a function to define the shape of the mask
+    // And in this case I'm inverting it so that I want
+    // the *inverse* of the circle to be black
+    clip(lightMask, { invert: true });
+    fill(0, 200);
+    rect(0, 0, width, height);
+    pop()
+}
+
+/**
+ * Defines the mask (an ellipse centered on the frog's tongue)
+ */
+function lightMask() {
+    ellipse(frog.tongue.x, frog.tongue.y, 250, 250);
 }

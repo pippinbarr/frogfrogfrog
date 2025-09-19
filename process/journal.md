@@ -32,20 +32,3 @@ Sitting in Myriade right now I wondered about a flick-oriented control where you
 And there are other ways too... like a non-moving frog for instance but you tap a target location and the tongue heads that way? That would be maybe a smaller step for the moment, though completely changes the tongue's movement... would need a speed and an *angle* instead of just it moving vertically every time.
 
 But maybe that's what I try and then pending how that feels the flick could be a next step (though that sort of thing always seems fiddly)? Although maybe the flick takes it to a place that's not quite as friendly for desktop computers/mouse-input? And does it end up just not feeling quite so dynamic if the frog doesn't move around? HMMMM. Well maybe it's just a try it and see... maybe there's a way to preserve the different input style? Probably not though. A smart person would make a branch and try that, but that will make the branch invisible? Or... actually what if I made *this* a branch and didn't continue that branch (never merged it) as a way of sign-pointing a major build moment? Have we already discussed this within MDM?? It suddenly seems like quite a great idea? A branch not to explore something new but to preserve something old...! Huh.
-
-## Ignore this (2025-09-19)
-
-SDjfklsfdjlksd. SJKDLfjklsdf.,sd mfg,sd jfksd kfjsd
-sdfs
- sek l;sdf sdfs
- 
- sdf 
- dsf 
- dsf 
- sd
- f ds
- fds
- fds
- fdsfdsfdsfjklsdjfklsd
- 
- 

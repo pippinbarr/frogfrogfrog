@@ -121,7 +121,7 @@ function setup() {
     }
 
     // Play atmosphere (won't start until there's user input though)
-    // sounds.atmosphere.loop();
+    sounds.atmosphere.loop();
     sounds.buzzing.loop();
 }
 
